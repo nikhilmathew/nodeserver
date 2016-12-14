@@ -78,10 +78,12 @@ console.log("listening on port 54920");
 
 var insertDocument = function (db, name, email, callback) {
   //console.log(name + email);
-  db.subscribers.update({
-    "Email": email
-  }, {
+  db.collection('subscribers').insertOne({
     "Name": name,
     "Email": email
-  }, {upsert:true});
+  }, function (err, result) {
+    assert.equal(err, null);
+    console.log("Inserted a document into the subscribers.");
+    callback();
+  });
 };
